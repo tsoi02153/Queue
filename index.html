@@ -1,0 +1,89 @@
+<!doctype html public "-//w3c//dtd html 3.2//en">
+<html>
+<head>
+<title>Demo of adding element to an array</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+ <script type="text/javascript">
+var data = new Array(); // creating array
+
+function add_element(){
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+data.push({time:dateTime, licence: document.getElementById('t1').value}); // adding element to array
+document.getElementById('t1').value=''; // Making the text box blank
+
+
+dispWaiting(); // displaying the array elements
+}
+function remove_element(index_no){
+var t1=data.splice(index_no,1);
+dispWaiting(); // displaying the array elements
+}
+function move_next(){
+document.getElementById('currentCar').innerHTML = '<span class="licenceText">' + data[0].licence + '</span>'
+var t1=data.splice(0,1);
+dispWaiting(); 
+}
+function dispWaiting(){
+var str='';
+console.log("123");
+for (i=0;i<data.length;i++) 
+{ 
+str += '<span class="licenceText">'+data[i].licence +' ' + " </span><a href=# onClick='remove_element("+data.indexOf(data[i])+")'> Remove</a> " + "<br >";  // adding each element with key number to variable
+}
+document.getElementById('disp').innerHTML=str;  
+}
+</script>
+<style>
+.leftTitle{
+	background-color: #25885a;
+	color: White;
+	text-align: center
+}
+.rightTitle{
+	background-color: #e87b3a;
+	color: White;
+	text-align: center
+}
+
+.leftColumn{
+	padding-left: 0px;
+    padding-right: 0px;
+    min-height: 900px
+}
+.RightColumn{
+	padding-left: 0px;
+    padding-right: 0px;
+    min-height: 900px
+}
+
+.licenceText{
+	font-size : 100px;
+}
+</style>
+</head>
+
+<body>
+
+
+
+
+<div class = "container-fluid">
+	<div class="row">
+		<div class="col-6 leftColumn">
+			<div class="fs-1 leftTitle">Current</div>
+			<div class="leftContent" id='currentCar'></div>
+		</div>
+		<div class="col-6 RightColumn">
+			<div class="fs-1 rightTitle">Waiting</div>
+			<div class="RightContent"id='disp'></div>
+		</div>	
+	</div>
+	<input type=text  id='t1'><input type=button value='Add' onClick='add_element()';>
+	<input type=button value='Next' onClick='move_next()';>
+</div>
+</body>
+</html>
