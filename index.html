@@ -23,13 +23,13 @@ var t1=data.splice(index_no,1);
 dispWaiting(); // displaying the array elements
 }
 function move_next(){
-var url = new URL('https://docs.google.com/forms/d/e/1FAIpQLSe0yG1umUwZmbcl4DhQuWfjaSzwiYGAeW2WB1am3BFEXmRnag/formResponse')
 
-var params = [['entry.904990414', data[0].licence], ['entry.625096762', data[0].time]]
 
-url.search = new URLSearchParams(params).toString();
+fetch('https://docs.google.com/forms/d/e/1FAIpQLSe0yG1umUwZmbcl4DhQuWfjaSzwiYGAeW2WB1am3BFEXmRnag/formResponse?' + new URLSearchParams({
+    entry.904990414: data[0].licence,
+    entry.625096762: data[0].time,
+}))
 
-fetch(url)
 document.getElementById('currentCar').innerHTML = '<span class="licenceText">' + data[0].licence + '</span>'
 var t1=data.splice(0,1);
 dispWaiting(); 
