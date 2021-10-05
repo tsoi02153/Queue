@@ -4,17 +4,29 @@
 <title>Demo of adding element to an array</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>	
  <script type="text/javascript">
 var data = new Array(); // creating array
+
+setInterval(function(){
+ var focusbox;
+ focusbox = document.getElementById("t1");
+ focusbox.focus();
+});
 
 function add_element(){
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime = date+' '+time;
-data.push({time:dateTime, licence: document.getElementById('t1').value}); // adding element to array
+data.push({time:dateTime, licence: document.getElementById('t1').value.toUpperCase()}); // adding element to array
 document.getElementById('t1').value=''; // Making the text box blank
 
+$(".input1").on('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        add_element();
+    }
+});
 
 dispWaiting(); // displaying the array elements
 }
@@ -23,20 +35,13 @@ var t1=data.splice(index_no,1);
 dispWaiting(); // displaying the array elements
 }
 function move_next(){
-
-
-fetch('https://docs.google.com/forms/d/e/1FAIpQLSe0yG1umUwZmbcl4DhQuWfjaSzwiYGAeW2WB1am3BFEXmRnag/formResponse?' + new URLSearchParams({
-    entry.904990414: data[0].licence,
-    entry.625096762: data[0].time,
-}))
-
 document.getElementById('currentCar').innerHTML = '<span class="licenceText">' + data[0].licence + '</span>'
 var t1=data.splice(0,1);
 dispWaiting(); 
 }
 function dispWaiting(){
 var str='';
-console.log("123");
+
 for (i=0;i<data.length;i++) 
 { 
 str += '<span class="licenceText">'+data[i].licence +' ' + " </span><a href=# onClick='remove_element("+data.indexOf(data[i])+")'> Remove</a> " + "<br >";  // adding each element with key number to variable
@@ -89,7 +94,7 @@ document.getElementById('disp').innerHTML=str;
 			<div class="RightContent"id='disp'></div>
 		</div>	
 	</div>
-	<input type=text  id='t1'><input type=button value='Add' onClick='add_element()';>
+	<input type=text  id='t1' style="text-transform:uppercase"><input type=button value='Add' onClick='add_element()';>
 	<input type=button value='Next' onClick='move_next()';>
 </div>
 </body>
